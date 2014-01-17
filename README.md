@@ -8,10 +8,12 @@ Overview
 frontend.sh
  * sets up IRC connection
  * runs middleend piped to irc
+ * rudimentary response
 
 middleend.py
  * harvests atom feed
  * generates text
+ * run with the opt 'once' to avoid it looping
  
 backend (IRC client) is ii 
  * http://tools.suckless.org/ii/
@@ -25,8 +27,8 @@ Deps:
 
 Configurate by editing the two source files.  Useful variables are near the top.
 
+Ensure you don't run the script without first changing the server, channel and nick details!  If you _do_ make this leviathic mistake: make sure you personally join #unvanquished-dev, apologise to Veyrdite, join in the conversation and try out the game.  Fail this at your own risk: the gods of IRC will make all your PONGS tremble with latency.
+
 To-do
 -----
-* Make the front-end listen for questions & print URL + license of this project
-* Add colour
-* Determine un-coded contribution types to mediawiki (eg moves)
+* Add regexps for other mediawiki contributions (ie page moves)

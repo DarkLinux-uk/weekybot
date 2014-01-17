@@ -62,7 +62,7 @@ workingdir="/tmp/Weekybot${RANDOM}"
 mkdir $workingdir
 cd $workingdir
 
-
+# IRC backend
 ii -s $server -n $nick -p $port -i . &
 iipid=$!
 
@@ -79,43 +79,46 @@ cleanup()
 }
 trap 'cleanup' 1 2 3 6  # TODO: refine signal list
 
+
+## Main block
 echo -n "Connecting to ${server}... "
-while [ $(ls | wc -l) -eq 0 ]
-do
-	sleep 1
-done
+while [ $(ls | wc -l) -eq 0 ]; do sleep 1; done
 echo 'done'
 
 cd $server
-sleep 1
+sleep 1 # Neccesary?
 
 echo -n 'Waiting for +i... '
-until ( grep -q 'End of /MOTD command' out ) # freenode specific?
-do
-	sleep 1
-done
+until ( grep -q 'End of /MOTD command' out ) do sleep 1; done # freenode specific?
 echo "recieved"
 
 echo "/join #${channel}" > in
 echo -n 'Waiting to confirm channel join..'
-until ( ls | grep -q "$channel" )
-do
-	sleep 1
-done
+until ( ls | grep -q "$channel" ); do sleep 1; done
 
 cd "#${channel}"
 
-until ( grep -q "has joined" out )
+until ( grep -q "has joined" out ); do sleep 1; done
+echo 'done'
+
+echo -e 'Starting middleend script...'
+${execdir}/middleend.py > in &
+
+
+# Rudimentary response capability
+tail -f -n1 out | while read line
 do
-	sleep 1
+	if ( echo $line | grep -qi "${nick}:")
+	then
+		if ( echo $line | grep -qi "force")
+		then
+			${execdir}/middleend.py once > in
+		else
+			echo "\"${nick}\" is weekybot, an IRC bot that periodically scrapes mediawiki atom feeds for changes." > in
+			echo "Ask me to 'force' if you want an update right now. See https://github.com/Veyrdite/weekybot for more details" > in
+		fi
+	fi
 done
 
-echo -e '\n Starting middleend script...'
-${execdir}/middleend.py > in &
-pidmiddle=$?
 
-
-sleep 99999
-
-cleanup
 
