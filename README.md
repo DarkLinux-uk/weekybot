@@ -1,7 +1,7 @@
 weekybot
 ========
 
-IRC bot that periodically scrapes mediawiki atom feeds for changes.  Designed for http://unvanquished.net/wiki and use on the freenode channel #unvanquished-dev
+IRC bot that periodically scrapes mediawiki atom feeds for changes.  Designed for http://unvanquished.net/wiki and used on the freenode channel #unvanquished-dev
 
 Overview
 --------
@@ -23,9 +23,10 @@ Deps:
 * Python feedparser http://pythonhosted.org/feedparser/
 * ii http://tools.suckless.org/ii/
 
+Configurate by editing the two source files.  Useful variables are near the top.
 
 To-do
 -----
-* Make the front-end listen for questions & print URL + license of project
+* Make the front-end listen for questions & print URL + license of this project
 * Add colour
-* Determine remaining contribution types to mediawiki
+* Determine un-coded contribution types to mediawiki (eg moves)
