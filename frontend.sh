@@ -32,7 +32,7 @@
 port=6667
 server="irc.freenode.net"
 channel="unvanquished-dev"
-nick="Weekybot"
+nick="regnarg"
 
 
 which ii &> /dev/null
@@ -86,14 +86,14 @@ while [ $(ls | wc -l) -eq 0 ]; do sleep 1; done
 echo 'done'
 
 cd $server
-sleep 1 # Neccesary?
+#sleep 1 # Neccesary?
 
 echo -n 'Waiting for +i... '
 until ( grep -q 'End of /MOTD command' out ) do sleep 1; done # freenode specific?
 echo "recieved"
 
 echo "/join #${channel}" > in
-echo -n 'Waiting to confirm channel join..'
+echo -n 'Waiting to confirm channel join... '
 until ( ls | grep -q "$channel" ); do sleep 1; done
 
 cd "#${channel}"
@@ -101,14 +101,20 @@ cd "#${channel}"
 until ( grep -q "has joined" out ); do sleep 1; done
 echo 'done'
 
-echo -e 'Starting middleend script...'
+echo -e '(Running the middleend script)'
 ${execdir}/middleend.py > in &
 
 
 # Rudimentary response capability
 tail -f -n1 out | while read line
 do
-	if ( echo $line | grep -qi "${nick}:")
+	if ( echo $line | grep -qi "<${nick}>" )
+	then
+		# Don't respond to my own chat!
+		# This could end in infinite loops
+		echo " - Self-chat situation detected - "
+		
+	elif ( echo $line | grep -qi "${nick}:")
 	then
 		if ( echo $line | grep -qi "force")
 		then
