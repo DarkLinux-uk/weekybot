@@ -50,6 +50,8 @@ contrib_types.append( ["Older revision</td", "edit"] )
 contrib_types.append( ["</a> deleted page <a", "delete"] )
 contrib_types.append( ["<p><b>New page</b></p>", "create"] )
 contrib_types.append( ["protected &quot;", "protect"] )
+contrib_types.append( ["</a> uploaded a new version of &quot;", "new version"] )
+contrib_types.append( ["</a> moved page <a class=", "move"] )
 
 #### Colours
 # See http://www.ircbeginner.com/ircinfo/colors.html for codes
@@ -99,7 +101,7 @@ while running:
 			contrib['title'] =  feed.entries[entry_num].title
 			contrib['author'] = feed.entries[entry_num].author
 			contrib['type'] = 'unknown'
-			summary = feed.entries[entry_num].summary[0:1000] # Length optim not neccesary?
+			summary = feed.entries[entry_num].summary[0:2000] # Length optim not neccesary?
 			for contype in contrib_types:
 				if re.search( contype[0], summary):
 					contrib['type'] = contype[1]

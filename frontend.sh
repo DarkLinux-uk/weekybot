@@ -111,9 +111,8 @@ do
 	if ( echo $line | grep -qi "<${nick}>" )
 	then
 		# Don't respond to my own chat!
-		# This could end in infinite loops
-		echo " - Self-chat situation detected - "
-		
+		# This could end in infinite loops		
+		:
 	elif ( echo $line | grep -qi "${nick}:")
 	then
 		if ( echo $line | grep -qi "force")

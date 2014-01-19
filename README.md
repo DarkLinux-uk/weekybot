@@ -8,7 +8,7 @@ Overview
 frontend.sh
  * sets up IRC connection
  * runs middleend piped to irc
- * rudimentary response
+ * rudimentary responses
 
 middleend.py
  * harvests atom feed
@@ -29,6 +29,10 @@ Configurate by editing the two source files.  Useful variables are near the top.
 
 Ensure you don't run the script without first changing the server, channel and nick details!  If you _do_ make this leviathic mistake: make sure you personally join #unvanquished-dev, apologise to Veyrdite, join in the conversation and try out the game.  Fail this at your own risk: the gods of IRC will make all your PONGS tremble with latency.
 
+Other notes
+-----------
+Python seems to report pipe breakages occasionally.  I don't know what's causing this (ii recreating its fifos?) but it seems to be harmless.  The bot still keeps working as per normal.
+
 To-do
 -----
-* Add regexps for other mediawiki contributions (ie page moves)
+* Add regexps for remaining undiscovered mediawiki contributer actions
